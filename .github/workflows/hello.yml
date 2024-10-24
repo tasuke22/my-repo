@@ -1,14 +1,12 @@
-name: Manual
-on:
-  workflow_dispatch:                       # 手動実行イベント
-    inputs:
-      greeting:                            # 入力パラメータ名
-        type: string                       # データ型（文字列）
-        default: Hello                     # 入力パラメータのデフォルト値
-        required: true                     # 入力パラメータの必須フラグ
-        description: A cheerful word       # 入力パラメータの概要
+name: Environment variables
+on: push
 jobs:
   run:
     runs-on: ubuntu-latest
+    env:
+      BRANCH: main # ジョブレベルで環境変数を定義
     steps:
-      - run: echo "${{ inputs.greeting }}" # 入力パラメータ「greeting」の参照
+      - run: echo "${BRANCH}" # シェルコマンドからジョブレベルの環境変数を参照
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }} # envコンテキスト経由でジョブレベルの環境変数を参照
