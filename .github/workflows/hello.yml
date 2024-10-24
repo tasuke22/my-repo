@@ -1,12 +1,9 @@
-name: Environment variables
+name: Intermediate environment variables
 on: push
 jobs:
-  run:
+  print:
     runs-on: ubuntu-latest
     env:
-      BRANCH: main # ジョブレベルで環境変数を定義
+      ACTOR: ${{ github.actor }} # コンテキストの値を環境変数へセット
     steps:
-      - run: echo "${BRANCH}" # シェルコマンドからジョブレベルの環境変数を参照
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.BRANCH }} # envコンテキスト経由でジョブレベルの環境変数を参照
+      - run: echo "${ACTOR}"     # 環境変数経由でコンテキストのプロパティを参照
